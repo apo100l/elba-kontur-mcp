@@ -1,6 +1,7 @@
 name: Publish to npm
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
@@ -27,7 +28,8 @@ jobs:
         run: npm ci
 
       - name: Verify tag matches package version
-        run: test "v$(node -p \"require('./package.json').version\")" = "$GITHUB_REF_NAME"
+        if: github.ref_type == 'tag'
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
 
       - name: Test
         run: npm test
