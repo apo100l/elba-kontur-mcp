@@ -40,6 +40,14 @@ npm install
 npm run build
 ```
 
+После публикации можно установить пакет глобально без клонирования:
+
+```bash
+npm install --global elba-kontur-mcp
+```
+
+В конфигурации MCP в этом случае используйте команду `elba-kontur-mcp` без `args`.
+
 ## 3. Подключите MCP-клиент
 
 Укажите абсолютный путь к `dist/index.js` и передайте ключ через окружение.
@@ -125,6 +133,32 @@ npm test
 ```
 
 При обновлении API замените `openapi.json`, затем выполните проверку и тесты. Клиент автоматически использует список маршрутов из схемы.
+
+## Версионирование и публикация
+
+Проект использует [Semantic Versioning](https://semver.org/lang/ru/):
+
+- `patch` — исправления без изменения совместимости;
+- `minor` — новые обратно совместимые возможности;
+- `major` — несовместимые изменения MCP-инструментов или конфигурации.
+
+Перед выпуском обновите [`CHANGELOG.md`](./CHANGELOG.md), убедитесь, что ветка `main` чистая, затем выберите тип версии:
+
+```bash
+npm run release:patch
+# или npm run release:minor
+# или npm run release:major
+```
+
+Команда обновит версии в `package.json` и `package-lock.json`, создаст коммит и Git-тег. Отправьте их вместе:
+
+```bash
+git push origin main --follow-tags
+```
+
+Тег `vX.Y.Z` запускает workflow `.github/workflows/publish.yml`: он сверяет тег с версией пакета, выполняет тесты и публикует пакет с provenance.
+
+Для публикации добавьте в настройках GitHub-репозитория секрет Actions `NPM_TOKEN` с npm automation/granular access token. Ограничьте токен только этим пакетом и правом публикации.
 
 ## Безопасность
 

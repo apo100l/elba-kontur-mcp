@@ -3,6 +3,7 @@ import { z } from "zod";
 import { ElbaApiError, ElbaClient } from "./client.js";
 import { findOperation, operationDetails, operations } from "./spec.js";
 import type { HttpMethod } from "./types.js";
+import { packageVersion } from "./version.js";
 
 const jsonObject = z.record(z.string(), z.unknown());
 
@@ -25,7 +26,7 @@ function errorResult(error: unknown) {
 
 export function createServer(client: ElbaClient): McpServer {
   const server = new McpServer(
-    { name: "elba-kontur-mcp", version: "1.0.0" },
+    { name: "elba-kontur-mcp", version: packageVersion },
     { instructions: "Use these tools to work with the Kontur.Elba Public API. Inspect an operation before calling it when its request body is unclear." },
   );
 
