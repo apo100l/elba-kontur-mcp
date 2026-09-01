@@ -32,7 +32,17 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: Check whether version is already published
+        id: registry
+        run: |
+          if npm view "$npm_package_name@$npm_package_version" version >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish
+        if: steps.registry.outputs.exists != 'true'
         run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
