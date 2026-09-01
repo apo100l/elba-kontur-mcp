@@ -1,0 +1,33 @@
+{
+  "name": "elba-kontur-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for the Kontur.Elba Public API",
+  "type": "module",
+  "bin": {
+    "elba-kontur-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "openapi.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "test": "npm run build && node --test dist/**/*.test.js",
+    "start": "node dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.3"
+  },
+  "license": "MIT"
+}
